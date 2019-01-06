@@ -18,7 +18,7 @@ class InlineHandler(InlineUserHandler, AnswererMixin):
         query_id, from_id, query_string = glance(msg, flavor='inline_query')
 
         def compute_answer():
-            tmp = open('content.txt', 'r').read()
+            tmp = open('content.txt', 'r', encoding='utf8').read()
             sayList = tmp.split(',\n')[0:-1]
             articles = [{'type': 'article', 'id': 'id', 'title': '虎虎?', 'message_text': random.choice(sayList)}]
 
