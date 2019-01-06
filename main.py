@@ -29,13 +29,10 @@ class InlineHandler(InlineUserHandler, AnswererMixin):
         query_id, from_id, query_string = glance(msg, flavor='inline_query')
 
         def compute_answer():
-            # print(self.id, ':', 'Inline Query:', query_id, from_id, query_string)
-
             sayList = ['虎虎女裝', '什麼時候要女裝啊 @allen0099', '虎虎！！！！！！', '該女裝囉虎虎',
                        '乖 穿上。', '妳再不穿上就要被濫了', '請女裝以解鎖說話權限。', '穿女裝得永生', '虎虎女裝拯救世界',
-                       '虎虎女裝讓我的世界變彩色']
-            articles = [{'type': 'article',
-                         'id': 'id', 'title': '虎虎?', 'message_text': random.choice(sayList)}]
+                       '虎虎女裝讓我的世界變彩色', '這麼想要穿女裝的應該是虎虎吧']
+            articles = [{'type': 'article', 'id': 'id', 'title': '虎虎?', 'message_text': random.choice(sayList)}]
 
             return articles, 0
 
