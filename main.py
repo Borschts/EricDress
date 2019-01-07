@@ -12,8 +12,8 @@ from inlineHandler import InlineHandler
 
 __author__ = 'smailzhu'
 
-logging.basicConfig(level=logging.DEBUG)
-coloredlogs.install(level='DEBUG')
+logging.basicConfig(level=logging.INFO)
+coloredlogs.install(level='INFO')
 
 TOKEN = os.environ.get('token', None)
 
