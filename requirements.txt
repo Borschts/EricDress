@@ -6,3 +6,5 @@ coloredlogs == 10.0
 
 # main.py: 12
 telepot == 12.7
+
+requests
