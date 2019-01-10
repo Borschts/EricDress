@@ -3,5 +3,7 @@
 inline query example
 
 # How to start
+## build image
 `docker build -t postergirl .`
+## start container
 `docker run --name ohmygod -e token=tokenhere -d postergirl`
