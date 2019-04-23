@@ -1,30 +1,40 @@
-import os
-import asyncio
+import sys
 import logging
-import coloredlogs
 
-from telepot.aio import DelegatorBot
-from telepot.aio.delegate import create_open
-from telepot.aio.loop import MessageLoop
-from telepot.delegate import pave_event_space, per_inline_from_id
+from termcolor import *
+from pprint import pprint as pp
+from configparser import ConfigParser
 
-from inlineHandler import InlineHandler
+from telegram import user
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-__author__ = 'smailzhu'
-
-logging.basicConfig(level=logging.INFO)
-coloredlogs.install(level='INFO')
-
-TOKEN = os.environ.get('token', None)
+# Custom
+import handle
 
 
-bot = DelegatorBot(TOKEN, [
-    pave_event_space()(
-        per_inline_from_id(), create_open, InlineHandler, timeout=10),
-])
-loop = asyncio.get_event_loop()
+class app:
+    def __init__(self):
+        self.config = ConfigParser()
+        self.config.read('config.txt', encoding='utf8')
+        self.loggingFormat = f'{colored("%(asctime)s", "white")} - {colored("%(levelname)s", "red")} - %(message)s'
+        file_handler = logging.FileHandler(filename='hexlightning.log')
+        stdout_handler = logging.StreamHandler(sys.stdout)
+        logging_handler = [file_handler, stdout_handler]
+        logging.basicConfig(
+            level=logging.INFO,
+            format=self.loggingFormat,
+            handlers=logging_handler
+        )
+        self.logger = logging.getLogger(__name__)
+        self.loggingFormat = f'{colored("%(asctime)s", "white")} - !name - {colored("%(levelname)s", "red")} - %(message)s'
 
-loop.create_task(MessageLoop(bot).run_forever())
-logging.info('Listening ...')
+    def run(self):
+        handle.worker(
+            inherit=self,
+            token=self.config.get('bot', 'token'),
+        )
 
-loop.run_forever()
+
+if __name__ == '__main__':
+    app = app()
+    app.run()
