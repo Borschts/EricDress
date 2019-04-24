@@ -4,7 +4,6 @@ import time
 import random
 import logging
 
-import redis
 import requests
 
 import telegram
@@ -24,7 +23,7 @@ class app:
         logger = logging.getLogger(__name__)
         self.logger = inherit.logger
         self.config = inherit.config
-        self.client = redis.from_url(self.config.get('redis', 'url'))
+        self.dress = list()
 
     @run_async
     def update_dict(self, bot, update):
@@ -32,26 +31,24 @@ class app:
         r = requests.get(url)
         if r.status_code != 200:
             return
-        self.client.delete('dress')
         for world in r.text.split(',\n'):
             if world:
-                self.client.lpush('dress', world)
+                self.dress.append(world)
         if update.message:
             update.message.reply_text('Updated.')
 
     @run_async
     def dong(self, bot, update):
         query = update.inline_query.query
-        if self.client.lindex('dress', 0) == None:
+        if self.dress == []:
             self.update_dict(bot, update).result()
-        total = self.client.llen('dress')
-        seed = self.client.lindex('dress', random.randint(0, total-1))
+        seed = random.choice(self.dress)
 
         results = [InlineQueryResultArticle(
             id=update.inline_query.id,
             title='虎虎？',
             thumb_url='https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/dress_1f457.png',
-            input_message_content=InputTextMessageContent(seed.decode()))]
+            input_message_content=InputTextMessageContent(seed))]
         bot.answer_inline_query(update.inline_query.id, results, cache_time=0)
 
     def error(self, bot, update, error):
