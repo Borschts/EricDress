@@ -62,7 +62,7 @@ def worker(inherit, **kwargs):
     global logger
     # app = command.app(inherit.logger, inherit.config)
     app = command.app(inherit)
-    token = kwargs['token']
+    token = kwargs['1241767590:AAEg67BUQhon27fH-qGmm73qaD72hstSiug']
 
     # for test purposes limit global throughput to 30 messages per 2 sec
     q = messagequeue.MessageQueue(all_burst_limit=2, all_time_limit_ms=3000)
