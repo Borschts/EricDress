@@ -46,7 +46,7 @@ class app:
 
         results = [InlineQueryResultArticle(
             id=update.inline_query.id,
-            title='虎虎？',
+            title='劉醬？',
             thumb_url='https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/dress_1f457.png',
             input_message_content=InputTextMessageContent(seed))]
         bot.answer_inline_query(update.inline_query.id, results, cache_time=0)
