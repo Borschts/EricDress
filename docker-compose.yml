@@ -1,6 +1,0 @@
-version: '2'
-services:
-  bot:
-    build: .
-    volumes:
-      - ./config.txt:/app/config.txt
